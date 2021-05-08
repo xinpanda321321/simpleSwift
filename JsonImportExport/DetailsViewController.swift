@@ -136,6 +136,7 @@ class DetailsViewController: UIViewController {
         
         guard let documentDirectoryUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
         let fileUrl = documentDirectoryUrl.appendingPathComponent("Persons.json")
+        print(fileUrl)
 
         do {
             let data = try JSONSerialization.data(withJSONObject: AppManager.shared.tableData, options: [])
