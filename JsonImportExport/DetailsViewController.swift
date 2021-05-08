@@ -39,6 +39,12 @@ class DetailsViewController: UIViewController {
         createTimePicker1()
         createTimePicker2()
         
+        sc.delegate = self
+        sc.returnKeyType = .done
+        
+        well.delegate = self
+        well.returnKeyType = .done
+        
         if AppManager.shared.flag == 1 {
             let tempData = AppManager.shared.tableData[AppManager.shared.indexP] as [String: Any]
             print(tempData)
@@ -163,6 +169,8 @@ extension DetailsViewController: UICollectionViewDataSource, UICollectionViewDel
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell1", for: indexPath) as! CollectionViewCell1
             
             cell.cv1TF.text = label1Data[indexPath.row]
+            cell.cv1TF.delegate = self
+            cell.cv1TF.returnKeyType = .done
             
             return cell
         }
@@ -238,6 +246,7 @@ extension DetailsViewController {
         
         date1TF.text = formatter.string(from: datePicker.date)
         self.view.endEditing(true)
+        sc.becomeFirstResponder()
     }
     
     @objc func time1Done() {
@@ -249,6 +258,7 @@ extension DetailsViewController {
         
         time1TF.text = date24
         self.view.endEditing(true)
+        time2TF.becomeFirstResponder()
     }
     
     @objc func time2Done() {
@@ -260,5 +270,32 @@ extension DetailsViewController {
         
         time2TF.text = date24
         self.view.endEditing(true)
+        let nextCell = self.collectionView1?.cellForItem(at: IndexPath.init(row: 0, section: 0))
+        if let nextField = nextCell!.viewWithTag(1) as? UITextField {
+            nextField.becomeFirstResponder()
+        }
+    }
+}
+
+extension DetailsViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        if textField == sc { // Switch focus to other text field
+            print(sc.text)
+            well.becomeFirstResponder()
+        }
+        if textField == well {
+            time1TF.becomeFirstResponder()
+        }
+        else {
+            let nextCell = self.collectionView1?.cellForItem(at: IndexPath.init(row: textField.tag + 1, section: 0))
+            if let nextField = nextCell!.viewWithTag(textField.tag + 1) as? UITextField {
+                nextField.becomeFirstResponder()
+            } else {
+                // Not found, so remove keyboard.
+                textField.resignFirstResponder()
+            }
+        }
+        return true
     }
 }
