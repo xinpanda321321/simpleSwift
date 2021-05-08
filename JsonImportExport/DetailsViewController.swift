@@ -250,7 +250,7 @@ extension DetailsViewController {
         formatter.dateStyle = .none
         formatter.timeStyle = .short
         formatter.dateFormat = "HH:mm"
-        let date24 = formatter.string(from: datePicker.date)
+        let date24 = formatter.string(from: datePicker1.date)
         
         time1TF.text = date24
         self.view.endEditing(true)
@@ -261,7 +261,7 @@ extension DetailsViewController {
         formatter.dateStyle = .none
         formatter.timeStyle = .short
         formatter.dateFormat = "HH:mm"
-        let date24 = formatter.string(from: datePicker.date)
+        let date24 = formatter.string(from: datePicker1.date)
         
         time2TF.text = date24
         self.view.endEditing(true)

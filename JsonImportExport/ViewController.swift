@@ -18,6 +18,8 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         loadData1()
+        AppManager.shared.flag = 0
+        AppManager.shared.indexP = -1
     }
     
     func loadData1() {
