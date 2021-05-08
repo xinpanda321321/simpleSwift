@@ -57,4 +57,12 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 117
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        AppManager.shared.flag = 1
+        AppManager.shared.indexP = indexPath.row
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let balanceViewController = storyBoard.instantiateViewController(withIdentifier: "balance") as! DetailsViewController
+        self.navigationController?.pushViewController(balanceViewController, animated: true)
+    }
 }

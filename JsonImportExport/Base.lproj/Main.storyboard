@@ -120,7 +120,7 @@
         <!--Details View Controller-->
         <scene sceneID="8N5-pj-7rj">
             <objects>
-                <viewController id="Ezg-J1-A5v" customClass="DetailsViewController" customModule="JsonImportExport" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="balance" id="Ezg-J1-A5v" customClass="DetailsViewController" customModule="JsonImportExport" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JSP-xx-KD2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -189,7 +189,7 @@
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kaX-wM-eUg">
                                         <rect key="frame" x="0.0" y="15" width="374" height="367"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="F7y-ty-mSW">
                                             <size key="itemSize" width="91" height="34"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -229,6 +229,7 @@
                                         </connections>
                                     </collectionView>
                                 </subviews>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                 <constraints>
                                     <constraint firstItem="kaX-wM-eUg" firstAttribute="top" secondItem="VD9-lN-x40" secondAttribute="top" constant="15" id="0HS-DC-dHv"/>
                                     <constraint firstAttribute="trailing" secondItem="kaX-wM-eUg" secondAttribute="trailing" id="F53-jW-l2s"/>
@@ -240,9 +241,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zec-oP-umz">
                                 <rect key="frame" x="20" y="640" width="374" height="63"/>
                                 <subviews>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="7rg-CQ-w3J">
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="balance" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="7rg-CQ-w3J">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="63"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Gw0-iQ-9WA">
                                             <size key="itemSize" width="64" height="63"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -351,6 +352,11 @@
                         <outlet property="note" destination="hi5-Gl-e5N" id="ZR3-qi-UtW"/>
                         <outlet property="time1TF" destination="Snz-Nj-hOf" id="W0E-3h-glD"/>
                         <outlet property="time2TF" destination="Jbe-XZ-veR" id="467-kx-3bm"/>
+                        <outlet property="view1" destination="pcp-LR-QTo" id="OJf-Re-pPJ"/>
+                        <outlet property="view2" destination="ANJ-yY-Ujj" id="vME-Ju-S8k"/>
+                        <outlet property="view3" destination="VD9-lN-x40" id="FUe-KU-CUY"/>
+                        <outlet property="view4" destination="zec-oP-umz" id="Bos-vL-bWT"/>
+                        <outlet property="view5" destination="kBc-mK-a3i" id="bgK-E8-O6n"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pvH-eh-mot" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -379,6 +385,9 @@
         <image name="unchecked" width="300" height="300"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemTealColor">
             <color red="0.35294117647058826" green="0.78431372549019607" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

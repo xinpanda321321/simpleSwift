@@ -10,6 +10,8 @@ import Foundation
 class AppManager {
     
     var tableData = [[String: Any]]()
+    var flag = 0
+    var indexP = -1
     
     static let shared  = AppManager()
 }

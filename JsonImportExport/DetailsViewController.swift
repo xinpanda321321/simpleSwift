@@ -18,8 +18,17 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var collectionView2: UICollectionView!
     @IBOutlet weak var note: UITextView!
     
+    @IBOutlet weak var view1: UIView!
+    @IBOutlet weak var view2: UIView!
+    @IBOutlet weak var view3: UIView!
+    @IBOutlet weak var view4: UIView!
+    @IBOutlet weak var view5: UIView!
+    
     let datePicker = UIDatePicker()
     let datePicker1 = UIDatePicker()
+    
+    var label1Data = [String]()
+    var label2Data = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +38,56 @@ class DetailsViewController: UIViewController {
         createDatePicker2()
         createTimePicker1()
         createTimePicker2()
+        
+        if AppManager.shared.flag == 1 {
+            let tempData = AppManager.shared.tableData[AppManager.shared.indexP] as [String: Any]
+            print(tempData)
+            let tempDate = tempData["date"] as! [String]
+            date1TF.text = tempDate[0]
+            date2TF.text = tempDate[1]
+            
+            let tempTime = tempData["time"] as! [String]
+            time1TF.text = tempTime[0]
+            time2TF.text = tempTime[1]
+            
+            let tempChecked = tempData["accept"] as! String
+            if tempChecked == "1" {
+                checkBtn.setImage(UIImage(named: "checked"), for: UIControl.State.normal)
+            }
+            else {
+                checkBtn.setImage(UIImage(named: "unchecked"), for: UIControl.State.normal)
+            }
+            
+            let tempLabel1 = tempData["label1"] as! [String]
+            print(tempLabel1)
+            label1Data = tempLabel1
+            
+            let tempLabel2 = tempData["label2"] as! [String]
+            print(tempLabel2)
+            label2Data = tempLabel2
+            
+            let tempNote = tempData["note"] as! String
+            note.text = tempNote
+        }
+        else {
+            for _ in 0..<18 {
+                label1Data.append("")
+            }
+            for _ in 0..<6 {
+                label2Data.append("")
+            }
+        }
+        print(AppManager.shared.flag)
+        print(AppManager.shared.indexP)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+        self.view1.endEditing(true)
+        self.view2.endEditing(true)
+        self.view3.endEditing(true)
+        self.view4.endEditing(true)
+        self.view5.endEditing(true)
     }
 
     @IBAction func saveData(_ sender: Any) {
@@ -45,14 +104,19 @@ class DetailsViewController: UIViewController {
             label1String.append(cell.cv1TF.text!)
         }
         
-        let label2String = [String]()
+        var label2String = [String]()
         for i in 0..<6 {
             let cell = collectionView2.cellForItem(at: IndexPath(row: i, section: 0)) as! CollectionViewCell2
-            label1String.append(cell.cl2TF.text!)
+            label2String.append(cell.cl2TF.text!)
         }
         
         let tempPerson = ["date": date, "time": time, "accept": checked, "label1": label1String, "label2": label2String, "note": noteString] as [String : Any]
-        AppManager.shared.tableData.append(tempPerson)
+        if AppManager.shared.flag == 1 {
+            AppManager.shared.tableData[AppManager.shared.indexP] = tempPerson
+        }
+        else {
+            AppManager.shared.tableData.append(tempPerson)
+        }
         
         guard let documentDirectoryUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
         let fileUrl = documentDirectoryUrl.appendingPathComponent("Persons.json")
@@ -63,6 +127,7 @@ class DetailsViewController: UIViewController {
         } catch {
             print(error)
         }
+            
     }
 }
 
@@ -80,10 +145,14 @@ extension DetailsViewController: UICollectionViewDataSource, UICollectionViewDel
         if collectionView == collectionView1 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell1", for: indexPath) as! CollectionViewCell1
             
+            cell.cv1TF.text = label1Data[indexPath.row]
+            
             return cell
         }
         else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell2", for: indexPath) as! CollectionViewCell2
+            
+            cell.cl2TF.text = label2Data[indexPath.row]
             
             return cell
         }
@@ -179,18 +248,22 @@ extension DetailsViewController {
     @objc func time1Done() {
         let formatter = DateFormatter()
         formatter.dateStyle = .none
-        formatter.timeStyle = .medium
+        formatter.timeStyle = .short
+        formatter.dateFormat = "HH:mm"
+        let date24 = formatter.string(from: datePicker.date)
         
-        time1TF.text = formatter.string(from: datePicker.date)
+        time1TF.text = date24
         self.view.endEditing(true)
     }
     
     @objc func time2Done() {
         let formatter = DateFormatter()
         formatter.dateStyle = .none
-        formatter.timeStyle = .medium
+        formatter.timeStyle = .short
+        formatter.dateFormat = "HH:mm"
+        let date24 = formatter.string(from: datePicker.date)
         
-        time2TF.text = formatter.string(from: datePicker.date)
+        time2TF.text = date24
         self.view.endEditing(true)
     }
 }
