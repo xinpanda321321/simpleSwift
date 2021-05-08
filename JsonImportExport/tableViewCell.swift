@@ -9,6 +9,7 @@ import UIKit
 
 class tableViewCell: UITableViewCell {
     
+    @IBOutlet weak var dateMain: UILabel!
     @IBOutlet weak var date1: UILabel!
     @IBOutlet weak var date2: UILabel!
     @IBOutlet weak var cellView: UIView!

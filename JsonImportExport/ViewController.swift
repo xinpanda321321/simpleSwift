@@ -49,9 +49,14 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableViewCell") as! tableViewCell
         
+        let tempSc = AppManager.shared.tableData[indexPath.row]["sc"] as! String
+        cell.date1.text = tempSc
+        
+        let tempWell = AppManager.shared.tableData[indexPath.row]["well"] as! String
+        cell.date2.text = tempWell
+        
         let tempData = AppManager.shared.tableData[indexPath.row]["date"] as! [String]
-        cell.date1.text = tempData[0]
-        cell.date2.text = tempData[1]
+        cell.dateMain.text = tempData[0]
         
         return cell
     }

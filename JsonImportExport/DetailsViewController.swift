@@ -10,13 +10,14 @@ import UIKit
 class DetailsViewController: UIViewController {
     
     @IBOutlet weak var date1TF: UITextField!
-    @IBOutlet weak var date2TF: UITextField!
     @IBOutlet weak var time1TF: UITextField!
     @IBOutlet weak var time2TF: UITextField!
     @IBOutlet weak var checkBtn: UIButton!
     @IBOutlet weak var collectionView1: UICollectionView!
     @IBOutlet weak var collectionView2: UICollectionView!
     @IBOutlet weak var note: UITextView!
+    @IBOutlet weak var sc: UITextField!
+    @IBOutlet weak var well: UITextField!
     
     @IBOutlet weak var view1: UIView!
     @IBOutlet weak var view2: UIView!
@@ -35,7 +36,6 @@ class DetailsViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         createDatePicker1()
-        createDatePicker2()
         createTimePicker1()
         createTimePicker2()
         
@@ -44,7 +44,6 @@ class DetailsViewController: UIViewController {
             print(tempData)
             let tempDate = tempData["date"] as! [String]
             date1TF.text = tempDate[0]
-            date2TF.text = tempDate[1]
             
             let tempTime = tempData["time"] as! [String]
             time1TF.text = tempTime[0]
@@ -68,6 +67,12 @@ class DetailsViewController: UIViewController {
             
             let tempNote = tempData["note"] as! String
             note.text = tempNote
+            
+            let tempSc = tempData["sc"] as! String
+            sc.text = tempSc
+            
+            let tempWell = tempData["well"] as! String
+            well.text = tempWell
         }
         else {
             for _ in 0..<18 {
@@ -77,8 +82,17 @@ class DetailsViewController: UIViewController {
                 label2Data.append("")
             }
         }
-        print(AppManager.shared.flag)
-        print(AppManager.shared.indexP)
+        
+//        AppManager.shared.tableData = [[String: Any]]()
+//        guard let documentDirectoryUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+//        let fileUrl = documentDirectoryUrl.appendingPathComponent("Persons.json")
+//
+//        do {
+//            let data = try JSONSerialization.data(withJSONObject: AppManager.shared.tableData, options: [])
+//            try data.write(to: fileUrl, options: [])
+//        } catch {
+//            print(error)
+//        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -91,8 +105,10 @@ class DetailsViewController: UIViewController {
     }
 
     @IBAction func saveData(_ sender: Any) {
-        let date = [date1TF.text, date2TF.text]
+        let date = [date1TF.text]
         let time = [time1TF.text, time2TF.text]
+        let scString = sc.text
+        let wellString = well.text
         let noteString = note.text
         var checked = "0"
         if checkBtn.currentImage == UIImage(named: "checked") {
@@ -110,7 +126,7 @@ class DetailsViewController: UIViewController {
             label2String.append(cell.cl2TF.text!)
         }
         
-        let tempPerson = ["date": date, "time": time, "accept": checked, "label1": label1String, "label2": label2String, "note": noteString] as [String : Any]
+        let tempPerson = ["date": date, "time": time, "sc": scString, "well": wellString, "accept": checked, "label1": label1String, "label2": label2String, "note": noteString] as [String : Any]
         if AppManager.shared.flag == 1 {
             AppManager.shared.tableData[AppManager.shared.indexP] = tempPerson
         }
@@ -188,19 +204,6 @@ extension DetailsViewController {
         datePicker.datePickerMode = .date
     }
     
-    func createDatePicker2() {
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        
-        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(date2Done))
-        toolbar.setItems([doneBtn], animated: true)
-        
-        date2TF.inputAccessoryView = toolbar
-        date2TF.inputView = datePicker
-        
-        datePicker.datePickerMode = .date
-    }
-    
     func createTimePicker1() {
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
@@ -233,15 +236,6 @@ extension DetailsViewController {
         formatter.timeStyle = .none
         
         date1TF.text = formatter.string(from: datePicker.date)
-        self.view.endEditing(true)
-    }
-    
-    @objc func date2Done() {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        
-        date2TF.text = formatter.string(from: datePicker.date)
         self.view.endEditing(true)
     }
     
