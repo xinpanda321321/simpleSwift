@@ -89,16 +89,16 @@ class DetailsViewController: UIViewController {
             }
         }
         
-//        AppManager.shared.tableData = [[String: Any]]()
-//        guard let documentDirectoryUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
-//        let fileUrl = documentDirectoryUrl.appendingPathComponent("Persons.json")
-//
-//        do {
-//            let data = try JSONSerialization.data(withJSONObject: AppManager.shared.tableData, options: [])
-//            try data.write(to: fileUrl, options: [])
-//        } catch {
-//            print(error)
-//        }
+        AppManager.shared.tableData = [[String: Any]]()
+        guard let documentDirectoryUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+        let fileUrl = documentDirectoryUrl.appendingPathComponent("Persons.json")
+
+        do {
+            let data = try JSONSerialization.data(withJSONObject: AppManager.shared.tableData, options: [])
+            try data.write(to: fileUrl, options: [])
+        } catch {
+            print(error)
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -169,6 +169,7 @@ extension DetailsViewController: UICollectionViewDataSource, UICollectionViewDel
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell1", for: indexPath) as! CollectionViewCell1
             
             cell.cv1TF.text = label1Data[indexPath.row]
+            cell.cv1TF.tag = indexPath.row + 6
             cell.cv1TF.delegate = self
             cell.cv1TF.returnKeyType = .done
             
@@ -178,6 +179,9 @@ extension DetailsViewController: UICollectionViewDataSource, UICollectionViewDel
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell2", for: indexPath) as! CollectionViewCell2
             
             cell.cl2TF.text = label2Data[indexPath.row]
+            cell.cl2TF.tag = indexPath.row + 24
+            cell.cl2TF.delegate = self
+            cell.cl2TF.returnKeyType = .done
             
             return cell
         }
@@ -271,7 +275,7 @@ extension DetailsViewController {
         time2TF.text = date24
         self.view.endEditing(true)
         let nextCell = self.collectionView1?.cellForItem(at: IndexPath.init(row: 0, section: 0))
-        if let nextField = nextCell!.viewWithTag(1) as? UITextField {
+        if let nextField = nextCell!.viewWithTag(6) as? UITextField {
             nextField.becomeFirstResponder()
         }
     }
@@ -279,7 +283,7 @@ extension DetailsViewController {
 
 extension DetailsViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+//        textField.resignFirstResponder()
         if textField == sc { // Switch focus to other text field
             print(sc.text)
             well.becomeFirstResponder()
@@ -288,12 +292,26 @@ extension DetailsViewController: UITextFieldDelegate {
             time1TF.becomeFirstResponder()
         }
         else {
-            let nextCell = self.collectionView1?.cellForItem(at: IndexPath.init(row: textField.tag + 1, section: 0))
-            if let nextField = nextCell!.viewWithTag(textField.tag + 1) as? UITextField {
-                nextField.becomeFirstResponder()
-            } else {
-                // Not found, so remove keyboard.
-                textField.resignFirstResponder()
+            if textField.tag < 23 {
+                let nextCell = self.collectionView1?.cellForItem(at: IndexPath.init(row: textField.tag - 5, section: 0))
+                if let nextField = nextCell!.viewWithTag(textField.tag + 1) as? UITextField {
+                    nextField.becomeFirstResponder()
+                } else {
+                    // Not found, so remove keyboard.
+                    textField.resignFirstResponder()
+                }
+            }
+            else if textField.tag < 29 {
+                let nextCell = self.collectionView2?.cellForItem(at: IndexPath.init(row: textField.tag - 23, section: 0))
+                if let nextField = nextCell!.viewWithTag(textField.tag + 1) as? UITextField {
+                    nextField.becomeFirstResponder()
+                } else {
+                    // Not found, so remove keyboard.
+                    textField.resignFirstResponder()
+                }
+            }
+            else if textField.tag == 29 {
+                note.becomeFirstResponder()
             }
         }
         return true
