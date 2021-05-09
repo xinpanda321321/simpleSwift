@@ -351,6 +351,23 @@ extension DetailsViewController: UITextFieldDelegate, UITextViewDelegate {
             }
             else if textField.tag == 29 {
                 note.becomeFirstResponder()
+                var temp = ""
+                temp += "SC: " + sc.text! + "\n"
+                temp += "well: " + well.text! + "\n"
+                var tempLabel1 = ""
+                for i in 0..<18 {
+                    let cell = collectionView1.cellForItem(at: IndexPath(row: i, section: 0)) as! CollectionViewCell1
+                    tempLabel1 += cell.cv1TF.text! + " "
+                }
+                temp += "label1: " + tempLabel1 + "\n"
+                
+                var tempLabel2 = ""
+                for i in 0..<6 {
+                    let cell = collectionView2.cellForItem(at: IndexPath(row: i, section: 0)) as! CollectionViewCell2
+                    tempLabel2 += cell.cl2TF.text! + " "
+                }
+                temp += "lebale2: " + tempLabel2 + "\n"
+                note.text = temp
             }
         }
         return true
