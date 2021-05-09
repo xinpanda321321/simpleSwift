@@ -283,12 +283,11 @@ extension DetailsViewController {
 
 extension DetailsViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        textField.resignFirstResponder()
+        textField.resignFirstResponder()
         if textField == sc { // Switch focus to other text field
-            print(sc.text)
             well.becomeFirstResponder()
         }
-        if textField == well {
+        else if textField == well {
             time1TF.becomeFirstResponder()
         }
         else {
