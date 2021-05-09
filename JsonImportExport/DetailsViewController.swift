@@ -359,14 +359,14 @@ extension DetailsViewController: UITextFieldDelegate, UITextViewDelegate {
                     let cell = collectionView1.cellForItem(at: IndexPath(row: i, section: 0)) as! CollectionViewCell1
                     tempLabel1 +=  cell.cv1TF.text! + " \"Enter\"\n"
                 }
-                temp += tempLabel1 + "\n"
+                temp += tempLabel1
                 
                 var tempLabel2 = ""
                 for i in 0..<6 {
                     let cell = collectionView2.cellForItem(at: IndexPath(row: i, section: 0)) as! CollectionViewCell2
                     tempLabel2 += cell.cl2TF.text! + " \"Enter\"\n"
                 }
-                temp += tempLabel2 + "\n"
+                temp += tempLabel2
                 note.text = temp
             }
         }
