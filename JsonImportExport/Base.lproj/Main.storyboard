@@ -438,6 +438,7 @@
                         <outlet property="date1TF" destination="aOP-df-4oF" id="Pqo-NE-uA3"/>
                         <outlet property="note" destination="hi5-Gl-e5N" id="ZR3-qi-UtW"/>
                         <outlet property="sc" destination="Phc-mF-I6n" id="FwL-fu-fvw"/>
+                        <outlet property="scrollView" destination="fYb-DK-jYj" id="F4Q-ja-daM"/>
                         <outlet property="time1TF" destination="Snz-Nj-hOf" id="W0E-3h-glD"/>
                         <outlet property="time2TF" destination="Jbe-XZ-veR" id="467-kx-3bm"/>
                         <outlet property="view1" destination="pcp-LR-QTo" id="OJf-Re-pPJ"/>
@@ -445,6 +446,7 @@
                         <outlet property="view3" destination="VD9-lN-x40" id="FUe-KU-CUY"/>
                         <outlet property="view4" destination="zec-oP-umz" id="Bos-vL-bWT"/>
                         <outlet property="view5" destination="kBc-mK-a3i" id="bgK-E8-O6n"/>
+                        <outlet property="view6" destination="nb9-P9-6Nr" id="y9L-gZ-Mps"/>
                         <outlet property="well" destination="PQU-8L-BWj" id="Zxw-2K-pPw"/>
                     </connections>
                 </viewController>

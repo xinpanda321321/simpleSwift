@@ -24,12 +24,22 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var view3: UIView!
     @IBOutlet weak var view4: UIView!
     @IBOutlet weak var view5: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var view6: UIView!
     
     let datePicker = UIDatePicker()
     let datePicker1 = UIDatePicker()
     
     var label1Data = [String]()
     var label2Data = [String]()
+    
+    var scrollOffset : CGFloat = 0
+    var distance : CGFloat = 0
+    
+    override func viewDidAppear(_ animated: Bool) {
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +54,13 @@ class DetailsViewController: UIViewController {
         
         well.delegate = self
         well.returnKeyType = .done
+        
+        note.delegate = self
+        note.returnKeyType = .done
+        
+        date1TF.delegate = self
+        time1TF.delegate = self
+        time2TF.delegate = self
         
         if AppManager.shared.flag == 1 {
             let tempData = AppManager.shared.tableData[AppManager.shared.indexP] as [String: Any]
@@ -103,11 +120,15 @@ class DetailsViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
+        scrollView.endEditing(true)
         self.view1.endEditing(true)
         self.view2.endEditing(true)
         self.view3.endEditing(true)
         self.view4.endEditing(true)
         self.view5.endEditing(true)
+        self.view6.endEditing(true)
+        self.collectionView1.endEditing(true)
+        self.collectionView2.endEditing(true)
     }
 
     @IBAction func saveData(_ sender: Any) {
@@ -279,10 +300,28 @@ extension DetailsViewController {
             nextField.becomeFirstResponder()
         }
     }
+    
+    @objc func keyboardWillShow(notification:NSNotification) {
+        print("here")
+        guard let userInfo = notification.userInfo else { return }
+        var keyboardFrame:CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+
+        var contentInset:UIEdgeInsets = self.scrollView.contentInset
+        contentInset.bottom = keyboardFrame.size.height + 20
+        scrollView.contentInset = contentInset
+    }
+
+    @objc func keyboardWillHide(notification:NSNotification) {
+
+        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+        scrollView.contentInset = contentInset
+    }
 }
 
-extension DetailsViewController: UITextFieldDelegate {
+extension DetailsViewController: UITextFieldDelegate, UITextViewDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
         textField.resignFirstResponder()
         if textField == sc { // Switch focus to other text field
             well.becomeFirstResponder()
@@ -314,5 +353,25 @@ extension DetailsViewController: UITextFieldDelegate {
             }
         }
         return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField.tag < 6 {
+            print("===============")
+            scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        }
+        else if textField.tag >= 6 && textField.tag < 24 {
+            scrollView.setContentOffset(CGPoint(x: 0, y: textField.center.y+50), animated: true)
+        }
+        else if textField.tag >= 24 && textField.tag < 29 {
+            scrollView.setContentOffset(CGPoint(x: 0, y: textField.center.y+120), animated: true)
+        }
+        else if textField.tag == 30 {
+            scrollView.setContentOffset(CGPoint(x: 0, y: textField.center.y+200), animated: true)
+        }
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        scrollView.setContentOffset(CGPoint(x: 0, y: textView.center.y+200), animated: true)
     }
 }
