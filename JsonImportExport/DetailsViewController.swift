@@ -37,8 +37,7 @@ class DetailsViewController: UIViewController {
     var distance : CGFloat = 0
     
     override func viewDidAppear(_ animated: Bool) {
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        AppManager.shared.saved = 0
     }
     
     override func viewDidLoad() {
@@ -132,46 +131,48 @@ class DetailsViewController: UIViewController {
     }
 
     @IBAction func saveData(_ sender: Any) {
-        let date = [date1TF.text]
-        let time = [time1TF.text, time2TF.text]
-        let scString = sc.text
-        let wellString = well.text
-        let noteString = note.text
-        var checked = "0"
-        if checkBtn.currentImage == UIImage(named: "checked") {
-            checked = "1"
-        }
-        var label1String = [String]()
-        for i in 0..<18 {
-            let cell = collectionView1.cellForItem(at: IndexPath(row: i, section: 0)) as! CollectionViewCell1
-            label1String.append(cell.cv1TF.text!)
-        }
-        
-        var label2String = [String]()
-        for i in 0..<6 {
-            let cell = collectionView2.cellForItem(at: IndexPath(row: i, section: 0)) as! CollectionViewCell2
-            label2String.append(cell.cl2TF.text!)
-        }
-        
-        let tempPerson = ["date": date, "time": time, "sc": scString, "well": wellString, "accept": checked, "label1": label1String, "label2": label2String, "note": noteString] as [String : Any]
-        if AppManager.shared.flag == 1 {
-            AppManager.shared.tableData[AppManager.shared.indexP] = tempPerson
-        }
-        else {
-            AppManager.shared.tableData.append(tempPerson)
-        }
-        
-        guard let documentDirectoryUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
-        let fileUrl = documentDirectoryUrl.appendingPathComponent("Persons.json")
-        print(fileUrl)
-
-        do {
-            let data = try JSONSerialization.data(withJSONObject: AppManager.shared.tableData, options: [])
-            try data.write(to: fileUrl, options: [])
-        } catch {
-            print(error)
-        }
+        if AppManager.shared.saved == 0 {
+            let date = [date1TF.text]
+            let time = [time1TF.text, time2TF.text]
+            let scString = sc.text
+            let wellString = well.text
+            let noteString = note.text
+            var checked = "0"
+            if checkBtn.currentImage == UIImage(named: "checked") {
+                checked = "1"
+            }
+            var label1String = [String]()
+            for i in 0..<18 {
+                let cell = collectionView1.cellForItem(at: IndexPath(row: i, section: 0)) as! CollectionViewCell1
+                label1String.append(cell.cv1TF.text!)
+            }
             
+            var label2String = [String]()
+            for i in 0..<6 {
+                let cell = collectionView2.cellForItem(at: IndexPath(row: i, section: 0)) as! CollectionViewCell2
+                label2String.append(cell.cl2TF.text!)
+            }
+            
+            let tempPerson = ["date": date, "time": time, "sc": scString, "well": wellString, "accept": checked, "label1": label1String, "label2": label2String, "note": noteString] as [String : Any]
+            if AppManager.shared.flag == 1 {
+                AppManager.shared.tableData[AppManager.shared.indexP] = tempPerson
+            }
+            else {
+                AppManager.shared.tableData.append(tempPerson)
+            }
+            
+            guard let documentDirectoryUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+            let fileUrl = documentDirectoryUrl.appendingPathComponent("Persons.json")
+            print(fileUrl)
+
+            do {
+                let data = try JSONSerialization.data(withJSONObject: AppManager.shared.tableData, options: [])
+                try data.write(to: fileUrl, options: [])
+            } catch {
+                print(error)
+            }
+            AppManager.shared.saved = 1
+        }
     }
 }
 
@@ -372,6 +373,6 @@ extension DetailsViewController: UITextFieldDelegate, UITextViewDelegate {
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        scrollView.setContentOffset(CGPoint(x: 0, y: textView.center.y+200), animated: true)
+        scrollView.setContentOffset(CGPoint(x: 0, y: textView.center.y+300), animated: true)
     }
 }
