@@ -89,16 +89,16 @@ class DetailsViewController: UIViewController {
             }
         }
         
-        AppManager.shared.tableData = [[String: Any]]()
-        guard let documentDirectoryUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
-        let fileUrl = documentDirectoryUrl.appendingPathComponent("Persons.json")
-
-        do {
-            let data = try JSONSerialization.data(withJSONObject: AppManager.shared.tableData, options: [])
-            try data.write(to: fileUrl, options: [])
-        } catch {
-            print(error)
-        }
+//        AppManager.shared.tableData = [[String: Any]]()
+//        guard let documentDirectoryUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+//        let fileUrl = documentDirectoryUrl.appendingPathComponent("Persons.json")
+//
+//        do {
+//            let data = try JSONSerialization.data(withJSONObject: AppManager.shared.tableData, options: [])
+//            try data.write(to: fileUrl, options: [])
+//        } catch {
+//            print(error)
+//        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
