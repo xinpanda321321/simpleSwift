@@ -129,6 +129,17 @@ class DetailsViewController: UIViewController {
 //        } catch {
 //            print(error)
 //        }
+        
+        view1.layer.cornerRadius = 10
+        view1.layer.masksToBounds = true
+        view2.layer.cornerRadius = 10
+        view2.layer.masksToBounds = true
+        view3.layer.cornerRadius = 10
+        view3.layer.masksToBounds = true
+        view4.layer.cornerRadius = 10
+        view4.layer.masksToBounds = true
+        view5.layer.cornerRadius = 10
+        view5.layer.masksToBounds = true
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
