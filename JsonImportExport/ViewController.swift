@@ -72,4 +72,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         let balanceViewController = storyBoard.instantiateViewController(withIdentifier: "balance") as! DetailsViewController
         self.navigationController?.pushViewController(balanceViewController, animated: true)
     }
+    
+    
 }
