@@ -87,14 +87,27 @@ class DetailsViewController: UIViewController {
             print(tempLabel2)
             label2Data = tempLabel2
             
-            let tempNote = tempData["note"] as! String
-            note.text = tempNote
-            
             let tempSc = tempData["sc"] as! String
             sc.text = tempSc
             
             let tempWell = tempData["well"] as! String
             well.text = tempWell
+            
+            var temp = ""
+            temp += "SC: " + sc.text! + " \"Enter\"\n"
+            temp += "well: " + well.text! + " \"Enter\"\n"
+            var tempLabel11 = ""
+            for i in 0..<18 {
+                tempLabel11 +=  tempLabel1[i] + " \"Enter\"\n"
+            }
+            temp += tempLabel11
+            
+            var tempLabel21 = ""
+            for i in 0..<6 {
+                tempLabel21 += tempLabel2[i] + " \"Enter\"\n"
+            }
+            temp += tempLabel21
+            note.text = temp
         }
         else {
             for _ in 0..<18 {
@@ -172,7 +185,27 @@ class DetailsViewController: UIViewController {
                 print(error)
             }
             AppManager.shared.saved = 1
+            
+            var temp = ""
+            temp += "SC: " + sc.text! + " \"Enter\"\n"
+            temp += "well: " + well.text! + " \"Enter\"\n"
+            var tempLabel1 = ""
+            for i in 0..<18 {
+                let cell = collectionView1.cellForItem(at: IndexPath(row: i, section: 0)) as! CollectionViewCell1
+                tempLabel1 +=  cell.cv1TF.text! + " \"Enter\"\n"
+            }
+            temp += tempLabel1
+            
+            var tempLabel2 = ""
+            for i in 0..<6 {
+                let cell = collectionView2.cellForItem(at: IndexPath(row: i, section: 0)) as! CollectionViewCell2
+                tempLabel2 += cell.cl2TF.text! + " \"Enter\"\n"
+            }
+            temp += tempLabel2
+            note.text = temp
         }
+        
+        view.endEditing(true)
     }
 }
 
