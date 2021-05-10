@@ -38,6 +38,7 @@ class DetailsViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         AppManager.shared.saved = 0
+        scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 100)
     }
     
     override func viewDidLoad() {
@@ -414,11 +415,11 @@ extension DetailsViewController: UITextFieldDelegate, UITextViewDelegate {
         }
         else if textField.tag >= 6 && textField.tag < 24 {
             scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 300)
-            scrollView.setContentOffset(CGPoint(x: 0, y: textField.center.y+50), animated: true)
+            scrollView.setContentOffset(CGPoint(x: 0, y: textField.center.y+150), animated: true)
         }
         else if textField.tag >= 24 && textField.tag < 29 {
             scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 300)
-            scrollView.setContentOffset(CGPoint(x: 0, y: textField.center.y+120), animated: true)
+            scrollView.setContentOffset(CGPoint(x: 0, y: textField.center.y+180), animated: true)
         }
         else if textField.tag == 30 {
             scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 300)
