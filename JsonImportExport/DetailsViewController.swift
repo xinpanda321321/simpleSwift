@@ -376,16 +376,20 @@ extension DetailsViewController: UITextFieldDelegate, UITextViewDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField.tag < 6 {
             print("===============")
+            scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 300)
             scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         }
         else if textField.tag >= 6 && textField.tag < 24 {
+            scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 300)
             scrollView.setContentOffset(CGPoint(x: 0, y: textField.center.y+50), animated: true)
         }
         else if textField.tag >= 24 && textField.tag < 29 {
+            scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 300)
             scrollView.setContentOffset(CGPoint(x: 0, y: textField.center.y+120), animated: true)
         }
         else if textField.tag == 30 {
-            scrollView.setContentOffset(CGPoint(x: 0, y: textField.center.y+200), animated: true)
+            scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 300)
+            scrollView.setContentOffset(CGPoint(x: 0, y: textField.center.y+300), animated: true)
         }
     }
     
